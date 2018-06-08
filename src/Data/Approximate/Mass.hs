@@ -30,7 +30,7 @@ import Data.Data
 #if __GLASGOW_HASKELL__ < 710
 import Data.Foldable
 #endif
-import Data.Functor.Bind
+import Data.Functor.Semimonad
 import Data.Functor.Extend
 import Data.Hashable (Hashable(..))
 import Data.Hashable.Lifted (Hashable1(..))
@@ -156,7 +156,7 @@ instance Traversable Mass where
   traverse f (Mass p a) = Mass p <$> f a
   {-# INLINE traverse #-}
 
-instance Apply Mass where
+instance Semiapplicative Mass where
   (<.>) = (<*>)
   {-# INLINE (<.>) #-}
 
@@ -184,7 +184,7 @@ instance Semigroup a => Semigroup (Mass a) where
   Mass p a <> Mass q b = Mass (p * q) (a <> b)
   {-# INLINE (<>) #-}
 
-instance Bind Mass where
+instance Semimonad Mass where
   Mass p a >>- f = case f a of
     Mass q b -> Mass (p * q) b
   {-# INLINE (>>-) #-}

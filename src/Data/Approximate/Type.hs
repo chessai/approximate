@@ -35,7 +35,7 @@ import Data.Data
 #if __GLASGOW_HASKELL__ < 710
 import Data.Foldable
 #endif
-import Data.Functor.Apply
+import Data.Functor.Semiapplicative
 import Data.Hashable (Hashable(..))
 import Data.Hashable.Lifted (Hashable1(..))
 import Data.Monoid
@@ -161,7 +161,7 @@ instance Pointed Approximate where
   point a = Approximate 1 a a a
   {-# INLINE point #-}
 
-instance Apply Approximate where
+instance Semiapplicative Approximate where
   Approximate p lf mf hf <.> Approximate q la ma ha = Approximate (p * q) (lf la) (mf ma) (hf ha)
   {-# INLINE (<.>) #-}
 
